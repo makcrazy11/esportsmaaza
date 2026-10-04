@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EsportsMaaza - Live Esports & Battle Royale Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#090d16',
+                        cardBg: '#111827',
+                        accent: '#f59e0b', /* Amber / Battle Royale Vibe */
+                        accentHover: '#d97706',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-darkBg text-gray-100 font-sans min-h-screen flex flex-col selection:bg-accent selection:text-black">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-cardBg/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('live')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-gamepad text-black text-xl font-bold"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-black tracking-wider bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent">ESPORTSMAAZA</span>
+                    <span class="block text-[10px] tracking-widest text-gray-400 uppercase font-semibold">Battle Royale & Tournaments</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-1">
+                <button onclick="switchTab('live')" id="nav-live" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-amber-500/10 text-amber-400 border border-amber-500/20">Live Lobbies</button>
+                <button onclick="switchTab('standings')" id="nav-standings" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-400 hover:text-white hover:bg-gray-800">Points Table</button>
+                <button onclick="switchTab('news')" id="nav-news" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-400 hover:text-white hover:bg-gray-800">Intel & News</button>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <button class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-bold px-4 py-2 rounded-lg text-sm transition-all shadow-lg shadow-amber-500/20 flex items-center space-x-2">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="hidden sm:inline">Alerts</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: LIVE LOBBIES -->
+        <section id="tab-live" class="space-y-6">
+            <!-- Game Filter Bar -->
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterGame('all')" id="filter-all" class="game-filter px-4 py-2 rounded-xl text-sm font-bold bg-amber-500 text-black transition-all flex items-center space-x-2 whitespace-nowrap shadow-md shadow-amber-500/20">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>All Games</span>
+                </button>
+                <button onclick="filterGame('bgmi')" id="filter-bgmi" class="game-filter px-4 py-2 rounded-xl text-sm font-medium bg-cardBg text-gray-300 hover:bg-gray-800 border border-gray-800 transition-all flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                    <span>BGMI</span>
+                </button>
+                <button onclick="filterGame('pubg')" id="filter-pubg" class="game-filter px-4 py-2 rounded-xl text-sm font-medium bg-cardBg text-gray-300 hover:bg-gray-800 border border-gray-800 transition-all flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-plane text-orange-400"></i>
+                    <span>PUBG Mobile</span>
+                </button>
+                <button onclick="filterGame('fortnite')" id="filter-fortnite" class="game-filter px-4 py-2 rounded-xl text-sm font-medium bg-cardBg text-gray-300 hover:bg-gray-800 border border-gray-800 transition-all flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-cloud-bolt text-cyan-400"></i>
+                    <span>Fortnite</span>
+                </button>
+            </div>
+
+            <!-- Live Matches Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="matches-grid">
+                
+                <!-- Match Card 1: BGMI -->
+                <div class="match-card bg-cardBg border border-gray-800 rounded-2xl p-5 hover:border-amber-500/50 transition-all shadow-xl relative overflow-hidden group" data-game="bgmi">
+                    <div class="absolute top-0 right-0 bg-red-500/10 text-red-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-red-500/20 flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                        <span>LIVE LOBBY</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-xs text-amber-400 font-semibold mb-3">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>BGIS 2026 Grand Finals • Erangel</span>
+                    </div>
+
+                    <div class="space-y-3 my-4">
+                        <div class="flex items-center justify-between bg-black/30 p-3 rounded-xl border border-gray-800/60">
+                            <div class="flex items-center space-x-3">
+                                <span class="font-bold text-sm text-gray-300">GodLike Esports</span>
+                            </div>
+                            <span class="text-amber-400 font-black text-lg">WWCD</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-black/30 p-3 rounded-xl border border-gray-800/60">
+                            <div class="flex items-center space-x-3">
+                                <span class="font-bold text-sm text-gray-300">Team Soul</span>
+                            </div>
+                            <span class="text-gray-400 font-bold text-base">#2 (8 Frags)</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-800/60 text-xs text-gray-400">
+                        <span>Zone 5 Closing</span>
+                        <span class="text-amber-400 font-medium">32 Alive / 8 Teams</span>
+                    </div>
+                </div>
+
+                <!-- Match Card 2: Fortnite -->
+                <div class="match-card bg-cardBg border border-gray-800 rounded-2xl p-5 hover:border-cyan-500/50 transition-all shadow-xl relative overflow-hidden group" data-game="fortnite">
+                    <div class="absolute top-0 right-0 bg-red-500/10 text-red-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-red-500/20 flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                        <span>LIVE LOBBY</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-xs text-cyan-400 font-semibold mb-3">
+                        <i class="fa-solid fa-cloud-bolt"></i>
+                        <span>FNCS Major 3 • Grand Finals</span>
+                    </div>
+
+                    <div class="space-y-3 my-4">
+                        <div class="flex items-center justify-between bg-black/30 p-3 rounded-xl border border-gray-800/60">
+                            <div class="flex items-center space-x-3">
+                                <span class="font-bold text-sm text-gray-300">Cooper & Mero</span>
+                            </div>
+                            <span class="text-cyan-400 font-black text-lg">112 pts</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-black/30 p-3 rounded-xl border border-gray-800/60">
+                            <div class="flex items-center space-x-3">
+                                <span class="font-bold text-sm text-gray-300">TaySon & Queasy</span>
+                            </div>
+                            <span class="text-gray-400 font-bold text-base">98 pts</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-800/60 text-xs text-gray-400">
+                        <span>Match 4 of 6</span>
+                        <span class="text-cyan-400 font-medium">Storm Surge Active</span>
+                    </div>
+                </div>
+
+                <!-- Match Card 3: PUBG -->
+                <div class="match-card bg-cardBg border border-gray-800 rounded-2xl p-5 hover:border-orange-500/50 transition-all shadow-xl relative overflow-hidden group" data-game="pubg">
+                    <div class="absolute top-0 right-0 bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-amber-500/20 flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span>UPCOMING</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-xs text-orange-400 font-semibold mb-3">
+                        <i class="fa-solid fa-plane"></i>
+                        <span>PMGC Group Stage • Miramar</span>
+                    </div>
+
+                    <div class="space-y-3 my-4">
+                        <div class="flex items-center justify-between bg-black/30 p-3 rounded-xl border border-gray-800/60">
+                            <span class="font-bold text-sm text-gray-300">Nova Esports</span>
+                            <span class="text-gray-500 font-bold text-sm">VS</span>
+                            <span class="font-bold text-sm text-gray-300">Four Angry Men</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-800/60 text-xs text-gray-400">
+                        <span>Starts in</span>
+                        <span class="text-orange-400 font-mono font-bold">00:45:20</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: STANDINGS / POINTS TABLE -->
+        <section id="tab-standings" class="hidden space-y-6">
+            <div class="bg-cardBg border border-gray-800 rounded-2xl p-6 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl font-black text-white">Tournament Standings</h2>
+                        <p class="text-sm text-gray-400">Overall leaderboard for BGIS / PMGC Battle Royale series</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-lg text-xs font-bold">BGMI Pro League</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-800 text-xs uppercase tracking-wider text-gray-400">
+                                <th class="py-3 px-4">Rank</th>
+                                <th class="py-3 px-4">Team Name</th>
+                                <th class="py-3 px-4 text-center">WWCD</th>
+                                <th class="py-3 px-4 text-center">Place Pts</th>
+                                <th class="py-3 px-4 text-center">Finish Pts</th>
+                                <th class="py-3 px-4 text-right">Total Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-800/60 text-sm">
+                            <tr class="hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 font-black text-amber-400">#1</td>
+                                <td class="py-4 px-4 font-bold text-white flex items-center space-x-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                    <span>GodLike Esports</span>
+                                </td>
+                                <td class="py-4 px-4 text-center font-semibold text-gray-300">4</td>
+                                <td class="py-4 px-4 text-center text-gray-400">68</td>
+                                <td class="py-4 px-4 text-center text-gray-400">84</td>
+                                <td class="py-4 px-4 text-right font-black text-amber-400 text-base">152</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 font-black text-gray-300">#2</td>
+                                <td class="py-4 px-4 font-bold text-white flex items-center space-x-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-gray-500"></span>
+                                    <span>Team Soul</span>
+                                </td>
+                                <td class="py-4 px-4 text-center font-semibold text-gray-300">3</td>
+                                <td class="py-4 px-4 text-center text-gray-400">55</td>
+                                <td class="py-4 px-4 text-center text-gray-400">79</td>
+                                <td class="py-4 px-4 text-right font-black text-white text-base">134</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 font-black text-amber-700">#3</td>
+                                <td class="py-4 px-4 font-bold text-white flex items-center space-x-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-700"></span>
+                                    <span>Global Esports</span>
+                                </td>
+                                <td class="py-4 px-4 text-center font-semibold text-gray-300">2</td>
+                                <td class="py-4 px-4 text-center text-gray-400">48</td>
+                                <td class="py-4 px-4 text-center text-gray-400">72</td>
+                                <td class="py-4 px-4 text-right font-black text-white text-base">120</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: NEWS -->
+        <section id="tab-news" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <article class="bg-cardBg border border-gray-800 rounded-2xl p-6 hover:border-amber-500/50 transition-all">
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Roster Shuffle</span>
+                    <h3 class="text-lg font-bold text-white mt-2 mb-3">Major Lineup Changes Announced Ahead of PMGC 2026</h3>
+                    <p class="text-sm text-gray-400 mb-4">Top contenders restructure their active 4-man squads to optimize tactical rotations and frag power.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-800">
+                        <span>2 hours ago</span>
+                        <span class="text-amber-400 font-semibold">Read Full Intel →</span>
+                    </div>
+                </article>
+
+                <article class="bg-cardBg border border-gray-800 rounded-2xl p-6 hover:border-amber-500/50 transition-all">
+                    <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Patch Notes</span>
+                    <h3 class="text-lg font-bold text-white mt-2 mb-3">FNCS Competitive Settings Update for Season 4</h3>
+                    <p class="text-sm text-gray-400 mb-4">Epic Games introduces weapon adjustments and mobility item cooldowns for upcoming tournament rounds.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-800">
+                        <span>5 hours ago</span>
+                        <span class="text-cyan-400 font-semibold">Read Full Intel →</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-cardBg border-t border-gray-800 mt-12 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 EsportsMaaza. All rights reserved. Your ultimate battle royale and tournament hub.</p>
+    </footer>
+
+    <!-- JavaScript Navigation & Filters -->
+    <script>
+        function switchTab(tabId) {
+            ['live', 'standings', 'news'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t).className = "px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-400 hover:text-white hover:bg-gray-800";
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.getElementById('nav-' + tabId).className = "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-amber-500/10 text-amber-400 border border-amber-500/20";
+        }
+
+        function filterGame(gameKey) {
+            document.querySelectorAll('.game-filter').forEach(btn => {
+                btn.className = "game-filter px-4 py-2 rounded-xl text-sm font-medium bg-cardBg text-gray-300 hover:bg-gray-800 border border-gray-800 transition-all flex items-center space-x-2 whitespace-nowrap";
+            });
+            document.getElementById('filter-' + gameKey).className = "game-filter px-4 py-2 rounded-xl text-sm font-bold bg-amber-500 text-black transition-all flex items-center space-x-2 whitespace-nowrap shadow-md shadow-amber-500/20";
+
+            document.querySelectorAll('.match-card').forEach(card => {
+                if (gameKey === 'all' || card.getAttribute('data-game') === gameKey) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
